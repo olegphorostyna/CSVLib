@@ -6,6 +6,9 @@
 
 #include "test_impl/UserImplementationTets.h"
 #include "Query.h"
+#include "Record.h"
+
+using type = usd::Record::Type;
 
 enum class CSVState {
     UnqoutedField,
@@ -111,5 +114,20 @@ int main(int argc, char *argv[]){
                                             setCol("Ammount").
                                             setDistinct(true).
                                             setSmallerThan(1000).build();
+    
+    usd::Record record;   
+    record.addColumn("Index", type::INT);
+    record.addColumn("Age",type::INT);
+    record.addColumn("Name",type::STRING);
+     record.addColumn("Surname",type::STRING); 
+
+    record.printCellNames();
+    //record.setValue("Index",1).setValue("Name","Oleg").setValue("Age", 26);
+    record.setValue("Index",1).setValue("Age",20).setValue("Name","Andrew").setValue("Surname","Jhony"); 
+    //record.setValue("Index",1).setValue("Age",20).setValue("Name","Andrew"); //segmentation fault
+
+    record.printRecord();
+
+    
     return 0;
 }

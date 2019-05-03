@@ -1,5 +1,7 @@
 #include "Query.h"
 
+
+
 usd::Query::QueryBuilder& usd::Query::QueryBuilder::setCol(std::string col){    
      q_prop.cols_to_select.push_back(col);
      return *this;

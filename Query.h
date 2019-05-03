@@ -37,6 +37,6 @@ namespace usd{
            };
         private:
             Query(const QueryProperties& prop): properties(prop){}
-            QueryProperties properties;           
+            QueryProperties properties;         
     };
 }
