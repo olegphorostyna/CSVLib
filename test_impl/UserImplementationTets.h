@@ -1,3 +1,6 @@
+#ifndef USER_IMPLEMENTATION_TEST
+#define USER_IMPLEMENTATION_TEST
+
 #include "../SCValizable.h"
 #include <string>
 #include <vector>
@@ -23,3 +26,5 @@ namespace usd{
 
     };
 }
+
+#endif

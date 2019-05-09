@@ -1,3 +1,6 @@
+#ifndef RECORD
+#define RECORD
+
 #include<string>
 #include<vector>
 #include <iostream>
@@ -8,8 +11,12 @@
 namespace usd{
     //Represent one record in a table
     class Record{  
-        public:
-            ~Record();       
+        public:    
+            Record(){}       
+            ~Record() = default; 
+            Record (const Record& r) = delete;
+            Record& operator=(const Record& r)=delete;
+            Record(Record&& r):row_(std::move(r.row_)),is_master_record_(r.is_master_record_){ }     
        
         enum Type{
             STRING,
@@ -19,7 +26,17 @@ namespace usd{
             struct Cell{                
                 Cell(std::string n, Record::Type t):
                                                 name(n),
-                                                type(t){};
+                                                type(t){                                          
+                                                };
+                
+              
+                Cell(Cell&& c): name(c.name),
+                                type(c.type),
+                                data(c.data){
+                    if(c.type == Record::Type::STRING){
+                        c.data._str=nullptr;                       
+                    }                               
+                }
                 
                 ~Cell(){
                     if(type == Record::Type::STRING){
@@ -35,16 +52,14 @@ namespace usd{
                     char* _str;
                 } data;
                 
-                std::string getString(){   
-                    //std::cout<<"string returned"<<std::endl;
+                std::string getString(){                      
                     if(data._str ==nullptr){
                         return "";
                     }                 
-                    return std::string(data._str);
+                    return std::string(data._str);                     
                 }
 
-                std::string getName(){
-                    //std::cout<<"returning name: "<<name;
+                std::string getName(){                    
                     return name;
                 }
 
@@ -52,10 +67,8 @@ namespace usd{
                     return data._int;
                 }
 
-                void setString(std::string in_str){
-                   // std::cout<<"Trying to set string val"<<std::endl;
-                    data._str = std::strcpy(new char[in_str.length()+1], in_str.c_str()); 
-                   // std::cout<<"Value seted"<<std::endl;                          
+                void setString(std::string in_str){                   
+                    data._str = std::strcpy(new char[in_str.length()+1], in_str.c_str());                                           
                 }
 
                 void setInt(int in_int){
@@ -64,12 +77,22 @@ namespace usd{
             };
 
             std::vector<std::unique_ptr<usd::Record::Cell>> row_;
+            bool is_master_record_;
             
         public:
             Record& addColumn(std::string name, Record::Type type);
             Record& setValue(std::string col_name, std::string val);
-            Record& setValue(std::string col_name, int val);
+            Record& setValue(std::string col_name, int val);            
+            std::string getValue(std::string col_name);
+            std::string getCellName(int);
+            std::vector<std::string> toStrVector();
+            int getCellCount();
             void printCellNames();
             void printRecord();
+            void setAsMasterRecord(bool);
+            bool isMasterRecord();
+            bool contains(std::string);
     };
 }
+
+#endif

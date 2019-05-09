@@ -1,3 +1,6 @@
+#ifndef MASTER_RECORD_REDEFENITION
+#define MASTER_RECORD_REDEFENITION
+
 #include <exception>
 
 class  MasterRecordRedefenition : public std::exception{
@@ -6,3 +9,5 @@ class  MasterRecordRedefenition : public std::exception{
     }
 
 };
+
+#endif

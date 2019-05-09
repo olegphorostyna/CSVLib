@@ -1,3 +1,6 @@
+#ifndef CSVALIZABLE
+#define CSVALIZABLE
+
 #include <vector>
 #include <string>
 namespace usd{
@@ -6,3 +9,5 @@ namespace usd{
             virtual std::vector<std::string> toCSV() = 0;
     };
 }
+
+#endif

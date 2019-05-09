@@ -34,6 +34,9 @@
         "utility": "cpp",
         "memory": "cpp",
         "deque": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "string": "cpp",
+        "list": "cpp",
+        "functional": "cpp"
     }
 }
